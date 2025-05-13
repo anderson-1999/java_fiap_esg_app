@@ -22,8 +22,10 @@ public class ClimaEntity {
             sequenceName = "SEQ_CLIMA",
             allocationSize = 1
     )
-    @Column(name = "idClima")
+    @Column(name = "id_clima")
     private Long id;
+
+    @Column(name = "id_cidade")
     private long idCidade;
     private double temperatura;
     private double humidade;

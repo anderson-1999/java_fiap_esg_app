@@ -23,6 +23,8 @@ public class PoluicaoEntity {
     )
     @Column(name = "idPoluicao")
     private Long id;
+
+    @Column(name = "id_cidade")
     private long idCidade;
     private double co2;
 

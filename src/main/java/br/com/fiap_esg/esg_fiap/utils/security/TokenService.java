@@ -38,13 +38,13 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.require(algorithm)
-                    .withIssuer("calorias")
+                    .withIssuer("esg_fiap")
                     .build()
                     .verify(token)
                     .getSubject();
 
         }catch (JWTVerificationException e){
-            return "";
+            return "error ao verificar token";
         }
     }
 

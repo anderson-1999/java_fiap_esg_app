@@ -20,11 +20,9 @@ public class AuthorizationService implements UserDetailsService {
     UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserDetails usuarioEntity = usuarioRepository.findByLogin(username);
-
-        System.out.println(usuarioRepository.findByLogin(username));
+        UserDetails usuarioEntity = usuarioRepository.findByLogin(username.toUpperCase());
 
         if (usuarioEntity == null) {
             throw new UsernameNotFoundException("Usuario não encontrado!");

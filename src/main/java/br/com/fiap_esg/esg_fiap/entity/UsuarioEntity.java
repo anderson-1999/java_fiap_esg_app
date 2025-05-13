@@ -12,6 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
+@Data
 @Entity
 @EqualsAndHashCode
 @Table(name = "T_USUARIO")
@@ -27,7 +28,7 @@ public class UsuarioEntity implements UserDetails {
             sequenceName = "SEQ_USUARIO",
             allocationSize = 1
     )
-    @Column(name = "idUsuario")
+    @Column(name = "id_usuario")
     private Long id;
     private String senha;
     private String login;

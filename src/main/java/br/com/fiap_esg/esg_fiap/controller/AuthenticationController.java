@@ -39,9 +39,6 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private TokenService tokenService;
 
     @Autowired
@@ -59,8 +56,6 @@ public class AuthenticationController {
         Authentication auth = authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((UsuarioEntity) auth.getPrincipal());
-        System.out.println(token);
-
 
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }

@@ -37,7 +37,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         } else {
             token = authorizationHeader.replace("Bearer", "").trim();
             String login = tokenService.validateToken(token);
-            UserDetails usuario = usuarioRepository.findByLogin(login);
+            UserDetails usuario = usuarioRepository.findByLogin(login.toUpperCase());
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(

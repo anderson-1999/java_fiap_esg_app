@@ -23,10 +23,12 @@ public class CidadeEntity implements Serializable {
             sequenceName = "SEQ_CIDADE",
             allocationSize = 1
     )
-    @Column(name = "idCidade")
+    @Column(name = "id_cidade")
     private Long id;
 
+    @Column(name = "nome_cidade")
     private String nomeCidade;
+
     private String barrio;
     private String estado;
     private String cep;
