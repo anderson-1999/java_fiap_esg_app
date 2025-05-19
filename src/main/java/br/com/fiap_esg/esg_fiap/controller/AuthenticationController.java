@@ -3,13 +3,11 @@ package br.com.fiap_esg.esg_fiap.controller;
 import br.com.fiap_esg.esg_fiap.entity.UsuarioEntity;
 import br.com.fiap_esg.esg_fiap.reponse.AuthResponseDTO;
 import br.com.fiap_esg.esg_fiap.reponse.UsuarioResposeDTO;
-import br.com.fiap_esg.esg_fiap.repository.UsuarioRepository;
 import br.com.fiap_esg.esg_fiap.request.AuthenticationRequestDTO;
 import br.com.fiap_esg.esg_fiap.request.RegisterRequestDTO;
 import br.com.fiap_esg.esg_fiap.service.AuthorizationService;
 import br.com.fiap_esg.esg_fiap.utils.security.TokenService;
 //import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +15,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +39,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO authenticationRequestDTO){
+
 
 
         UsernamePasswordAuthenticationToken usernamePassword =

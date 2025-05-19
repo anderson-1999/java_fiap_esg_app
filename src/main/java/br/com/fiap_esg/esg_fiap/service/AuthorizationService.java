@@ -6,7 +6,6 @@ import br.com.fiap_esg.esg_fiap.repository.UsuarioRepository;
 import br.com.fiap_esg.esg_fiap.request.RegisterRequestDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +21,7 @@ public class AuthorizationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserDetails usuarioEntity = usuarioRepository.findByLogin(username.toUpperCase());
+        UserDetails usuarioEntity = usuarioRepository.findByLogin(username);
 
         if (usuarioEntity == null) {
             throw new UsernameNotFoundException("Usuario não encontrado!");
