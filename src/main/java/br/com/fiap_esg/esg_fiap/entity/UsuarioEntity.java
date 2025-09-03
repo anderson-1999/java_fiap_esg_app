@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,6 +20,7 @@ import java.util.List;
 @Table(name = "T_USUARIO")
 public class UsuarioEntity implements UserDetails {
 
+    @Getter
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -36,61 +38,6 @@ public class UsuarioEntity implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    public UsuarioEntity(String login, String senha, UserRole role) {
-        this.login = login;
-        this.senha = senha;
-        this.role = role;
-    }
-    public UsuarioEntity() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

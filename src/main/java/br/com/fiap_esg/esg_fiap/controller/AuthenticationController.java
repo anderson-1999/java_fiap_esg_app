@@ -9,7 +9,6 @@ import br.com.fiap_esg.esg_fiap.service.AuthorizationService;
 import br.com.fiap_esg.esg_fiap.utils.security.TokenService;
 //import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/auth", produces = {"application/json"})
 //@Tag(name = "Autenticão do Usuario")
