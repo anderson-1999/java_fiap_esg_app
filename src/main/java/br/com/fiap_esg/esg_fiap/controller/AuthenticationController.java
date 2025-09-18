@@ -38,8 +38,6 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO authenticationRequestDTO){
 
-
-
         UsernamePasswordAuthenticationToken usernamePassword =
                 new UsernamePasswordAuthenticationToken(
                         authenticationRequestDTO.login(),

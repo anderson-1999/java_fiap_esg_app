@@ -1,6 +1,6 @@
 package br.com.fiap_esg.esg_fiap.entity;
 
-import jakarta.persistence.*;
+import  jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -28,6 +28,7 @@ public class CidadeEntity implements Serializable {
 
     @Column(name = "nome_cidade")
     private String nomeCidade;
+
 
     private String barrio;
     private String estado;
