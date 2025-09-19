@@ -2,7 +2,7 @@ name: Continuos Intregration
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main" , "stanging" ]
   pull_request:
     branches: [ "main" ]
 
