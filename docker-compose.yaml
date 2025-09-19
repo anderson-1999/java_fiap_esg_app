@@ -1,0 +1,28 @@
+services:
+  OracleDb:
+    image: gvenzl/oracle-xe:latest
+    container_name: OracleDb
+    ports:
+      - '1521:1521'
+    environment:
+      ORACLE_PASSWORD: 12345
+      ORACLE_ALLOW_REMOTE: true
+      ORACLE_DISABLE_ASYNCH_IO: true
+      ORACLE_ENABLE_XDB: true
+    networks:
+      - private_network
+
+  backend:
+    container_name: backend
+    depends_on:
+      - OracleDb
+    build: ./
+    networks:
+      - public_network
+      - private_network
+
+networks:
+  public_network:
+    driver: bridge
+  private_network:
+    driver: bridge
