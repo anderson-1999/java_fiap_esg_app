@@ -6,8 +6,8 @@ services:
       - '1521:1521'
     environment:
       ORACLE_PASSWORD: 12345
-      ORACLE_SID: prd
-      ORACLE_USER: sys AS sysdba
+      ORACLE_SID: xe
+      ORACLE_USER: system
     volumes:
       - data:/var/lib/oracle
     networks:
@@ -19,7 +19,7 @@ services:
       retries: 5
 
   api :
-    container_name: backend
+    container_name: esg-fiap-java
     ports:
       - '8080:8080'
     depends_on:
@@ -27,10 +27,10 @@ services:
           condition: service_healthy
     build: .
     environment:
-      - PROFILE=dev
-      - DATABASE_URL=jdbc:oracle:thin:@localhost:1521:xe
-      - DATABASE_USER=sys AS sysdba
-      - DATABASE_PWD=12345
+      - SPRING_PROFILES_ACTIVE=prd
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@db:1521:xe
+      - SPRING_DATASOURCE_USERNAME=sys AS sysdba
+      - SPRING_DATASOURCE_PASSWORD=12345
     networks:
       - public_network
       - private_network

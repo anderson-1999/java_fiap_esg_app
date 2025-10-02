@@ -25,7 +25,7 @@ COPY --from=build  /opt/app/target/esg_fiap-0.0.1-SNAPSHOT.jar /opt/app/app.jar
 WORKDIR /opt/app
 
 # Define a variável de ambiente do profile (pode ser dev, prd, etc.)
-ENV PROFILE=prd
+ENV PROFILE=default
 ENV DATABASE_PWD="12345"
 ENV DATABASE_USER="sys AS sysdba"
 ENV DATABASE_URL="jdbc:oracle:thin:@localhost:1521:xe"
@@ -34,4 +34,4 @@ ENV DATABASE_URL="jdbc:oracle:thin:@localhost:1521:xe"
 EXPOSE 8080
 
 # Comando de inicialização, interpolando a variável PROFILE corretamente
-ENTRYPOINT  ["java", "-Dspring.profiles.active=${PROFILE}", "-Dspring.datasource.url=${DATABASE_URL}", "-Dspring.datasource.username=${DATABASE_USER}", "-Dspring.datasource.password=${DATABASE_PWD}", "-jar", "app.jar"]
+ENTRYPOINT  ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "app.jar"]
