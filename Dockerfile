@@ -10,7 +10,7 @@ COPY . /opt/app
 WORKDIR /opt/app
 
 # Executa o build do projeto, gerando o arquivo JAR
-RUN mvn clean package -DskipTests --batch-mode
+RUN mvn clean package -DskipTests
 
 # Etapa de runtime: usa uma imagem leve com apenas o JRE para rodar o app
 FROM eclipse-temurin:17-jre-alpine
@@ -34,4 +34,4 @@ ENV DATABASE_URL="jdbc:oracle:thin:@localhost:1521:xe"
 EXPOSE 8080
 
 # Comando de inicialização, interpolando a variável PROFILE corretamente
-ENTRYPOINT ["sh", "-c", "java -jar app.jar"]
+ENTRYPOINT  ["java", "-Dspring.profiles.active=${PROFILE}", "-Dspring.datasource.url=${DATABASE_URL}", "-Dspring.datasource.username=${DATABASE_USER}", "-Dspring.datasource.password=${DATABASE_PWD}", "-jar", "app.jar"]
