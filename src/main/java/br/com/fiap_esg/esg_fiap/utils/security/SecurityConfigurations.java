@@ -6,11 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,11 +27,12 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/teste").permitAll()
                         .requestMatchers(HttpMethod.POST, "/cidade").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/cidade").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/clima").hasRole("ADMIN")
@@ -68,9 +67,30 @@ public class SecurityConfigurations {
             "/swagger-ui/**",
             "/swagger-ui.html",
             "/auth/login",
-            "/auth/register", "/", "/resources/**", "/static/**", "/public/**", "/webui/**", "/h2-console/**"
-            , "/configuration/**", "/swagger-ui/**", "/swagger-resources/**", "/api-docs", "/api-docs/**", "/v2/api-docs/**"
-            , "/*.html", "/**/*.html" ,"/**/*.css","/**/*.js","/**/*.png","/**/*.jpg", "/**/*.gif", "/**/*.svg", "/**/*.ico", "/**/*.ttf","/**/*.woff","/**/*.otf"
+            "/auth/register",
+            "/",
+            "/resources/**",
+            "/static/**",
+            "/public/**",
+            "/webui/**",
+            "/h2-console/**",
+            "/configuration/**",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/api-docs",
+            "/api-docs/**",
+            "/v2/api-docs/**", "/*.html",
+            "/*/*.html",
+            "/*/*.css",
+            "/*/*.js",
+            "/*/*.png",
+            "/*/*.jpg",
+            "/*/*.gif",
+            "/*/*.svg",
+            "/*/*.ico",
+            "/*/*.ttf",
+            "/*/*.woff",
+            "/*/*.otf"
 
     };
 }

@@ -1,25 +1,42 @@
 services:
-  OracleDb:
+  db:
     image: gvenzl/oracle-xe:latest
-    container_name: OracleDb
+    container_name: Oracle
     ports:
       - '1521:1521'
     environment:
       ORACLE_PASSWORD: 12345
-      ORACLE_ALLOW_REMOTE: true
-      ORACLE_DISABLE_ASYNCH_IO: true
-      ORACLE_ENABLE_XDB: true
+      ORACLE_SID: prd
+      ORACLE_USER: sys AS sysdba
+    volumes:
+      - data:/var/lib/oracle
     networks:
       - private_network
+    healthcheck:
+      test: ["CMD", "sqlplus", "-S", "/ AS SYSDBA", "<<EOF", "SELECT 1 FROM DUAL;", "EXIT;", "EOF"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  backend:
+  api :
     container_name: backend
+    ports:
+      - '8080:8080'
     depends_on:
-      - OracleDb
-    build: ./
+       db:
+          condition: service_healthy
+    build: .
+    environment:
+      - PROFILE=dev
+      - DATABASE_URL=jdbc:oracle:thin:@localhost:1521:xe
+      - DATABASE_USER=sys AS sysdba
+      - DATABASE_PWD=12345
     networks:
       - public_network
       - private_network
+
+volumes:
+  data:
 
 networks:
   public_network:
