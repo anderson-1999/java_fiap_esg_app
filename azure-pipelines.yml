@@ -2,32 +2,46 @@ trigger:
   - main
 
 variables:
-  - name: process.clean
-    value: false
+  MAVEN_OPTS: 'Xmx3072m'
+  JAVA_VERSION: '17'
+  MAVEN_POM_FILE: 'pom.xml'
+  ARTIFACT_NAME: 'drop'
 
-pool: Default
+pool: 'ubuntu-lastest'
 
 stages:
   - stage: Build
-    displayName: Build stage
+    displayName: Compile e package
     jobs:
-      - job: Build
+      - job: MavenBuild
         displayName: Build Maven Project
         steps:
-          - task: Maven@3
-            #env:
-            #  JAVA_HOME: /Library/Java/JavaVirtualMachines/adopt-openjdk-8.jdk/Contents/Home
-            displayName: 'Maven Package'
+          - task: JavaToolInstaller@0
+            displayName: 'Install JDK'
             inputs:
-              mavenPomFile: 'pom.xml'
-              goals: 'package'
+              versionSpec: $(JAVA_VERSION)
+              jdkArchitectureOption: 'x64'
+
+          - task: Maven@3
+            displayName: 'Executar Clean, Test e Package'
+            inputs:
+              mavenPomFile: $(MAVEN_POM_FILE)
+              goals: 'clean install'
+              publishJUnitResults: true
+              testResultsFiles: '** /surefire-reports/TEST-*xml'
+              javaHomeOption: 'JDKVersion'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+
           - task: CopyFiles@2
-            displayName: 'Copy Files to artifact staging directory'
+            displayName: 'Copy Jar to staging directory'
             inputs:
               SourceFolder: '$(System.DefaultWorkingDirectory)'
-              Contents: '**/target/*.?(war|jar)'
-              TargetFolder: $(Build.ArtifactStagingDirectory)
+              Contents: '**/target/*.jar'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish build artifact'
             inputs:
-              pathToPublish: $(Build.ArtifactStagingDirectory)
-              artifactName: SampleSpringBootBuild
+              pathToPublish: '$(Build.ArtifactStagingDirectory)'
+              artifactName: '$ARTIFACT_NAME'
