@@ -7,8 +7,7 @@ variables:
   MAVEN_POM_FILE: 'pom.xml'
   ARTIFACT_NAME: 'drop'
 
-pool:
-  vmImage: 'ubuntu-lastest'
+pool: Default
 
 stages:
   - stage: Build
