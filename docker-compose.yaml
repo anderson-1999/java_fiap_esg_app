@@ -6,17 +6,19 @@ services:
       - '1521:1521'
     environment:
       ORACLE_PASSWORD: 12345
-      ORACLE_SID: xe
       ORACLE_USER: system
     volumes:
-      - data:/var/lib/oracle
+      - data:/opt/oracle/oradata
     networks:
       - private_network
+    privileged: true
+    tty: true
     healthcheck:
       test: ["CMD", "sqlplus", "-S", "/ AS SYSDBA", "<<EOF", "SELECT 1 FROM DUAL;", "EXIT;", "EOF"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 3m
 
   api :
     container_name: esg-fiap-java
@@ -26,10 +28,12 @@ services:
        db:
           condition: service_healthy
     build: .
+    image: esg-fiap-java:lastest
+    tty: true
     environment:
       - SPRING_PROFILES_ACTIVE=prd
       - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@db:1521:xe
-      - SPRING_DATASOURCE_USERNAME=sys AS sysdba
+      - SPRING_DATASOURCE_USERNAME=system
       - SPRING_DATASOURCE_PASSWORD=12345
     networks:
       - public_network

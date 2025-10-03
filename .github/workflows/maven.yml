@@ -69,7 +69,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'Esg-fiap-java'
+          app-name: 'esg-fiap-java'
           slot-name: 'production'
           publish-profile: ${{ secrets.AZURE_PROFILE }}
           images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/esg-fiap-java:${{ github.sha }}'

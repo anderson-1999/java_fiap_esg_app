@@ -10,7 +10,7 @@ COPY . /opt/app
 WORKDIR /opt/app
 
 # Executa o build do projeto, gerando o arquivo JAR
-RUN mvn clean package -DskipTests
+RUN mvn clean install -U -DskipTests
 
 # Etapa de runtime: usa uma imagem leve com apenas o JRE para rodar o app
 FROM eclipse-temurin:17-jre-alpine
@@ -24,14 +24,8 @@ COPY --from=build  /opt/app/target/esg_fiap-0.0.1-SNAPSHOT.jar /opt/app/app.jar
 # Define o diretório de trabalho
 WORKDIR /opt/app
 
-# Define a variável de ambiente do profile (pode ser dev, prd, etc.)
-ENV PROFILE=default
-ENV DATABASE_PWD="12345"
-ENV DATABASE_USER="sys AS sysdba"
-ENV DATABASE_URL="jdbc:oracle:thin:@localhost:1521:xe"
-
 # Expõe a porta 8080 (porta padrão da aplicação Spring Boot)
 EXPOSE 8080
 
 # Comando de inicialização, interpolando a variável PROFILE corretamente
-ENTRYPOINT  ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "app.jar"]
+ENTRYPOINT  ["java", "-jar", "app.jar"]
