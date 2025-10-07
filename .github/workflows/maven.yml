@@ -55,7 +55,7 @@ jobs:
     needs: build
     environment:
       name: 'production'
-      url: ${{  steps.deploy-to-webapp.outputs.webapp-url }}
+      url: ${{  URL }}
 
     steps:
       - name: Deploy to Azure Web App
