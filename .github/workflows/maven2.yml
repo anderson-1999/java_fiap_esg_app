@@ -22,9 +22,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Unit Tests (using H2 in-memory DB)
-        # Se os testes usam H2 (banco de dados em memória), a simples execução de 'mvn test' é suficiente,
-        # pois não é necessário configurar serviços externos como o Oracle.
+      - name: Run Unit Tests
         run: mvn test
 
   build:
@@ -50,19 +48,34 @@ jobs:
           tags: index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/esg-fiap-java:${{ github.sha }}
           file: ./Dockerfile
 
-  deploy:
+  deploy-gcp:
     runs-on: ubuntu-latest
-    needs: build
+    needs: build # Garante que a imagem Docker foi criada e enviada
     environment:
       name: 'production'
-      url: ${{  steps.deploy-to-webapp.outputs.webapp-url }}
+      # Define a URL pública do GAE após o deploy
+      url: https://${{ secrets.GCP_PROJECT_ID }}.uc.r.appspot.com
 
     steps:
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+      # 1. Autenticação: Faz login no Google Cloud
+      - name: 'Authenticate to GCP'
+        uses: google-github-actions/auth@v2
         with:
-          app-name: 'esg-fiap-java'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_PROFILE }}
-          images: 'index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/esg-fiap-java:${{ github.sha }}'
+          credentials_json: ${{ secrets.GCP_SA_KEY }} # Usa a chave JSON do segredo
+
+      # 2. Configuração: Instala a CLI do gcloud
+      - name: 'Set up gcloud CLI'
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          version: 'latest'
+
+      # 3. Deploy: Executa a implantação
+      - name: 'Deploy to App Engine'
+        uses: google-github-actions/deploy-appengine@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          # Especifica a imagem Docker completa a ser implantada (criada no job build)
+          image_url: index.docker.io/${{ secrets.DOCKERHUB_USERNAME }}/esg-fiap-java:${{ github.sha }}
+          # Usa o arquivo app.yaml para as configurações do ambiente flexível
+          version: v${{ github.sha }}
+          promote: true # Envia 100% do tráfego para a nova versão
