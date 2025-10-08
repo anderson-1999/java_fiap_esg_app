@@ -13,18 +13,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up SDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Run Unit Tests
-        run: mvn test
-
   build:
     runs-on: 'ubuntu-latest'
     needs: tests # Garante que a build só ocorra se os testes passarem
