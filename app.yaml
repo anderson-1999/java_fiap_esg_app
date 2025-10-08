@@ -1,0 +1,3 @@
+runtime: custom
+env: flex
+entrypoint: java -jar app.jar
