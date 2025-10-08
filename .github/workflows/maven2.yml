@@ -53,8 +53,6 @@ jobs:
     needs: build # Garante que a imagem Docker foi criada e enviada
     environment:
       name: 'production'
-      # Define a URL pública do GAE após o deploy
-      url: https://${{ secrets.GCP_PROJECT_ID }}.uc.r.appspot.com
 
     steps:
       # 1. Autenticação: Faz login no Google Cloud
