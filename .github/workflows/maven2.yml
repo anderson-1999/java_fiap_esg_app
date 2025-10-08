@@ -39,6 +39,8 @@ jobs:
       name: 'production'
 
     steps:
+      - name: Checkout repositor
+        uses: actions/checkout@v4
       # 1. Autenticação: Faz login no Google Cloud
       - name: 'Authenticate to GCP'
         uses: google-github-actions/auth@v2
