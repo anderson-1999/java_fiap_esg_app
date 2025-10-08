@@ -35,7 +35,6 @@ jobs:
 
   deploy-gcp:
     runs-on: ubuntu-latest
-    needs: build # Garante que a imagem Docker foi criada e enviada
     environment:
       name: 'production'
 
