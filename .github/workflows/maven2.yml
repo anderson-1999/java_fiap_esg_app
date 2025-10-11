@@ -1,7 +1,4 @@
-# Este workflow irá construir um projeto Java com Maven, e cache/restaurar dependências para melhorar o tempo de execução.
-# Os testes de unidade serão executados usando o banco de dados em memória H2, o que é mais rápido e isolado.
-
-name: Java CI with Maven
+name: Build and Deploy
 
 on:
   push:

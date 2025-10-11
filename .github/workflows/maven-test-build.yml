@@ -23,9 +23,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Run Unit Tests (using H2 in-memory DB)
-        # Se os testes usam H2 (banco de dados em memória), a simples execução de 'mvn test' é suficiente,
-        # pois não é necessário configurar serviços externos como o Oracle.
-        run: mvn test
+        run: mvn test --batch-mode --update-snapshots verify -Ptest
 
   build:
     runs-on: 'ubuntu-latest'
@@ -55,7 +53,7 @@ jobs:
     needs: build
     environment:
       name: 'production'
-      url: ${{  URL }}
+      url: ${{  steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - name: Deploy to Azure Web App
