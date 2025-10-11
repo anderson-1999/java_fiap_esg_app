@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Run Unit Tests (using H2 in-memory DB)
-        run: mvn test --batch-mode --update-snapshots verify -Ptest
+        run: mvn test --batch-mode --update-snapshots verify -Pteste-ci
 
   build:
     runs-on: 'ubuntu-latest'

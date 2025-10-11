@@ -9,6 +9,35 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<profiles>
+		<profile>
+			<id>teste-ci</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<dependencies>
+				<!-- Adiciona H2 para testes, excluindo-o da produção -->
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+				<!-- Exclui o driver de produção para garantir que ele não seja usado -->
+				<!-- Exemplo:
+                <dependency>
+                    <groupId>com.oracle.database.jdbc</groupId>
+                    <artifactId>ojdbc10</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                -->
+			</dependencies>
+			<properties>
+				<!-- Garante que o Spring Boot carregue o arquivo application-test.properties -->
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
 	<groupId>br.com.fiap_esg</groupId>
 	<artifactId>esg_fiap</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
