@@ -9,12 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan(basePackages={"br.com.fiap_esg.esg_fiap"})
-@EnableJpaRepositories(basePackages="br.com.fiap_esg.esg_fiap")
-@EnableTransactionManagement
-@EntityScan(basePackages="br.com.fiap_esg.esg_fiap")
-
 public class EsgFiapApplication {
 
 	public static void main(String[] args) {

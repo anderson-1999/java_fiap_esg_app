@@ -5,26 +5,25 @@ import br.com.fiap_esg.esg_fiap.reponse.UsuarioResposeDTO;
 import br.com.fiap_esg.esg_fiap.request.RegisterRequestDTO;
 import br.com.fiap_esg.esg_fiap.utils.UserRole;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @ActiveProfiles("test")
 class UsuarioRepositoryTest {
 
-    @Autowired
+    @PersistenceContext
     EntityManager entityManager;
 
     @Autowired
