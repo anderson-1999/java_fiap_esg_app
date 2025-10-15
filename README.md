@@ -2,15 +2,7 @@
 
 ##  Como executar localmente com Docker
 
-Descreva os passos para subir a aplicação.
-
-##  Pipeline CI/CD
-
-Explique as ferramentas utilizadas, as etapas do pipeline e seu funcionamento.
-
-##  Containerização
-
-Mostre o conteúdo do Dockerfile e as estratégias adotadas.
+sudo docker builld -t esg-fiap-java
 
 ##  Prints do funcionamento
 
@@ -19,3 +11,5 @@ Inclua evidências (prints ou links) de execução, deploy e funcionamento em st
 ##  Tecnologias utilizadas
 
 Liste as stacks, frameworks e ferramentas usadas.
+
+[Link do Repositório no GitHub](https://github.com/anderson-1999/java_fiap_esg_app)
